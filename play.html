@@ -215,7 +215,8 @@ function getSongInfo(name){
 
 $("#pre").click(function(){
     console.log("上一首");
- 
+    $(".play").css('display','block');
+            $(".pause").css('display','none');
     if(nowIndex>0){
         nowIndex--;
     }else{
@@ -231,7 +232,8 @@ $("#pre").click(function(){
 })
 $("#next").click(function(){
     console.log("下一首")
-    
+       $(".play").css('display','block');
+            $(".pause").css('display','none');
     if(nowIndex<musicList.length-1){
         nowIndex++;
     }else{
