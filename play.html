@@ -10,70 +10,102 @@
         .main{
             height: 100vh;
                 overflow: hidden;
+                background-image: url('./src/images/1.jpg');
+                color: #eee;
         }
+  
 .header{
     padding: 0 10px;
     height: 5vh;
     font-size: 20px;
 }
+.header .back{
+            height: 20px;
+        }
 .content{
     height: 82vh;
-    overflow-y: scroll;
     padding: 20px;
     text-align: center;
+}
+.content .info{
+height: 10vh;
+}
+.content .txt{
+    height: 68vh;
+    overflow-y: scroll;
+    padding: 20px 0;
 }
 .footer{
     height: 13vh;
     font-size: 30px;
     padding: 0 80px;
 }
+.footer img{
+    width: 50px;
+    height: 50px;
+}
     </style>
 </head>
 <body>
-    <div class="main qwe">
+    <div class="main">
        <div class="header">
-           <a href="./index.html"><</a>
+           <a href="./index.html">
+            <img class="back" src="./src/images/back.png">
+        </a>
        </div>
-       <div class="content qwee">
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-       </div>
-       <div class="footer qwe flex justify-between align-center">
-           <div>
-            <
+       <div class="content">
+           <div class="info">
+                <h4>歌名</h5>
+                <h5> -- 歌手 --</h5>
            </div>
-              <div>
-                播放
+           <div class="txt">
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+            <h4>中间内中间内容中容内容</h4>
+            <h4>中间内中间内容中间内容</h4>
+            <h4>中间内中间内容中中间容</h4>
+           </div>
+       </div>
+       <div class="footer flex justify-between align-center">
+           <div>
+            <img src="./src/images/left.png">
+           </div>
+           <div  id="play">
+            <div class="play">
+                <!-- 播放 -->
+                <img src="./src/images/play.png">
               </div>
+              <!-- <div class="pause">
+                暂停
+                <img src="./src/images/pause.png">
+              </div> -->
+           </div>
           <div>
-            >
+            <img src="./src/images/right.png">
           </div>
-        <!-- <audio controls>
+        <!-- <audio controls autoplay>
             <source src="horse.ogg" type="audio/ogg">
             <source src="horse.mp3" type="audio/mpeg">
           您的浏览器不支持 audio 元素。
