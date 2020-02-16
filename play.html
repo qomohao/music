@@ -9,13 +9,13 @@
     <style>
         .main{
             height: 100vh;
-                overflow: hidden;
-                background-image: url('./src/images/1.jpg');
-                color: #eee;
+            overflow: hidden;
+            background-image: url('./src/images/1.jpg');
+            color: #eee;
         }
   
 .header{
-    padding: 0 10px;
+    padding:10px;
     height: 5vh;
     font-size: 20px;
 }
@@ -23,18 +23,45 @@
             height: 20px;
         }
 .content{
-    height: 82vh;
+    margin-top: 8vh;
+    height: 70vh;
     padding: 20px;
     text-align: center;
 }
 .content .info{
-height: 11vh;
+height: 15vh;
 }
 .content .txt{
-    height: 68vh;
-    overflow-y: scroll;
+    /* height: 68vh;
+    overflow-y: scroll; */
+    /* text-align: center; */
     padding: 20px 0;
 }
+
+.card{
+    
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+}
+.rotate{
+    animation:cardRotate 15s infinite;
+	-webkit-animation:cardRotate 15s infinite; /*Safari and Chrome*/
+}
+
+@keyframes cardRotate
+{
+
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+
+.animationPause{
+	animation-play-state:paused;
+}
+
 .footer{
     height: 13vh;
     font-size: 30px;
@@ -44,72 +71,43 @@ height: 11vh;
     width: 50px;
     height: 50px;
 }
+#play .pause{
+    display: none;
+}
+
     </style>
 </head>
 <body>
     <div class="main">
-       <div class="header">
-           <a href="./index.html">
+       <div class="header" onclick="back()">
             <img class="back" src="./src/images/back.png">
-        </a>
        </div>
        <div class="content">
            <div class="info">
-                <h4>歌名</h5>
-                <h5> -- 歌手 --</h5>
+                <h4 class="songName">歌名</h5>
+                <h5  class="singerName"> -- 歌手 --</h5>
            </div>
-           <div class="txt">
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
-            <h4>中间内中间内容中容内容</h4>
-            <h4>中间内中间内容中间内容</h4>
-            <h4>中间内中间内容中中间容</h4>
+           <div class="txt flex justify-center">
+               <img class="card" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1309858910,4183469426&fm=26&gp=0.jpg" alt="">
            </div>
        </div>
        <div class="footer flex justify-between align-center">
            <div>
-            <img src="./src/images/left.png">
+            <img src="./src/images/left.png"  id="pre">
            </div>
            <div  id="play">
             <div class="play">
                 <!-- 播放 -->
                 <img src="./src/images/play.png">
               </div>
-              <!-- <div class="pause">
-                暂停
+              <div class="pause">
                 <img src="./src/images/pause.png">
-              </div> -->
+              </div>
            </div>
           <div>
-            <img src="./src/images/right.png">
+            <img src="./src/images/right.png" id="next">
           </div>
-        <!-- <audio controls autoplay>
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
-          您的浏览器不支持 audio 元素。
-          </audio> -->
+        <audio id="musicPlay"></audio>
        </div>
     </div>
 </body>
@@ -118,5 +116,133 @@ height: 11vh;
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
 
+    // 获取音乐实例
+ var music = document.getElementById("musicPlay");
+//  音乐列表
+var musicList=[];
+// 当前播放的音乐下标
+var nowIndex=0;
+    // 获取页面query值 -- val (歌曲名称)
+  function getQueryParam(key) {
+    if (!key) {
+        return false;
+    }
+    var value = '';
+    var paramStr = window.location.search ? window.location.search.substr(1) : '';
+    if (paramStr) {
+        paramStr.split('&').forEach(function (param) {
+            var arr = param.split('=');
+            if (arr[0] == key) {
+                value = arr[1];
+            }
+        });
+    }
+    return value;
+ }
 
+// 返回上一页面
+function back(){
+    history.go(-1)
+}
+//  判断音乐是否加载完毕
+function musicLoad(){
+   //  http://m10.music.126.net/20200216161140/c18d326dfe3d4ceec50a572f28b54b16/ymusic/974f/8268/7abe/8564ba8ba2e9ff9151f9c9266ab0c402.mp3
+//  判断query val 赋值歌曲链接进行播放
+ if(getQueryParam('val')){
+    //  console.log(getQueryParam('val'));
+     console.log(decodeURI(getQueryParam('val')));
+    $("#musicPlay").attr('src','./src/music/'+decodeURI(getQueryParam('val')));
+        music.addEventListener("canplay", function(){//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
+        console.log('音乐资源加载完成............')
+        getSongInfo();
+        music.play();
+        $(".card").addClass('rotate');
+    });
+ }
+ 
+}
+musicLoad()
+
+// 获取歌曲信息
+function getSongInfo(name){
+        console.log("获取音乐列表")
+        $.get('./src/data/data.json',function(data){
+            musicList=data;
+            console.log("音乐列表")
+            console.log(data);
+            let html='';
+            data.map((v,i)=>{
+
+
+               if(name){
+                if(v.name==name){
+                    $(".songName").html(v.name.split('-')[0].substr(0,v.name.length-4));
+                    $(".singerName").html(v.singer);
+                    nowIndex=i;
+                }
+               }else{
+                if(v.name==decodeURI(getQueryParam('val'))){
+                    $(".songName").html(v.name.split('-')[0].substr(0,v.name.length-4));
+                    $(".singerName").html(v.singer);
+                    nowIndex=i;
+               }
+               }
+            })
+            $(".list-group").html(html);
+        })
+}
+
+// 播放暂停操作
+ $("#play,.card").click(function(){
+        if(music.paused){//检查视频是否已暂停 true 指示音频/视频已暂停。否则为 false。
+            music.play();//开始播放
+            $(".play").css('display','block');
+            $(".pause").css('display','none');
+            // $("#audioBtn").removeClass("pause").addClass("play");
+            $(".card").removeClass('animationPause');
+
+        }else{
+            music.pause();//暂停播放
+            $(".pause").css('display','block');
+            $(".play").css('display','none');
+            // $("#audioBtn").removeClass("play").addClass("pause");
+            $(".card").addClass('animationPause');
+
+        }
+    });
+
+
+
+$("#pre").click(function(){
+    console.log("上一首");
+ 
+    if(nowIndex>0){
+        nowIndex--;
+    }else{
+        nowIndex=musicList.length-1;
+    }
+    $("#musicPlay").attr('src','./src/music/'+decodeURI(musicList[nowIndex].name));
+        music.addEventListener("canplay", function(){//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
+        console.log('音乐资源加载完成............')
+        getSongInfo(decodeURI(musicList[nowIndex].name));
+        music.play();
+        $(".card").addClass('rotate');
+    });
+})
+$("#next").click(function(){
+    console.log("下一首")
+    
+    if(nowIndex<musicList.length-1){
+        nowIndex++;
+    }else{
+        nowIndex=0;
+    }
+    $("#musicPlay").attr('src','./src/music/'+decodeURI(musicList[nowIndex].name));
+        music.addEventListener("canplay", function(){//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
+        console.log('音乐资源加载完成............')
+        getSongInfo(decodeURI(musicList[nowIndex].name));
+        music.play();
+        $(".card").addClass('rotate');
+    });
+})
 </script>

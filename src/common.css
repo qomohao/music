@@ -27,6 +27,12 @@ html,body{
     justify-content: flex-end;
 }
 
+
+.ellipsis{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
 .qwe{
     border: 1px solid red;
 }

@@ -15,15 +15,14 @@
             color: #666;
         }
         .header{
-            padding: 0 10px;
-            height: 8vh;
+            padding: 10px;
             font-size: 20px;
             position: -webkit-sticky; /* Safari */
-    position: sticky;
-    top: 0;
-    background: #fff;
-    z-index: 9;
-    box-shadow: 0 1px 1px 1px #eee;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 9;
+            box-shadow: 0 1px 1px 1px #eee;
         }
         .header .back{
             height: 20px;
@@ -31,6 +30,9 @@
         .header a{
             margin: 10px;
             display: inline-flex;
+        }
+        .keyTxt{
+            width: calc(100% - 50px);
         }
         .content{
             height: 90vh;
@@ -41,85 +43,37 @@
        padding: 15px 10px;
        border: 1px solid #eee;
     }
+    .noData{
+        text-align: center;
+        display: none;
+    }
+    .noData img{
+        width: 200px;
+        height: 200px;
+        padding: 20px 0;
+    }
     </style>
 </head>
 <body>
     <div class="main">
             <div class="header flex align-center">
-                  <a href="./index.html">
+                <a href="./index.html">
                     <img class="back" src="./src/images/back.png">
                 </a>
-                搜索结果
+                <div class="keyTxt ellipsis">
+                    搜索关键词：“<span id="keyVal"></span>”
+                </div>
             </div>
             <div class="content">
+                <div class="noData ">
+                    <div class="flex  justify-center">
+                        <img src="./src/images/noData.jpg" >
+                    </div>
+                    <p>什么也没找到~ 换个关键词吧</h5>
+                </div>
                 <!-- <h4>音乐列表组</h4> -->
                 <ul class="list-group">
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
-                    <a href="./play.html">
-                        <li class="list-group-item flex justify-between align-center" >
-                            <div>歌名  -- 歌手名</div>
-                            <div>播放 分享</div>
-                        </li>
-                    </a>
+                   
                 </ul>
             </div>
     </div>
@@ -128,6 +82,63 @@
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
+
+    // 获取页面query值 -- val (歌曲名称)
+    function getQueryParam(key) {
+    if (!key) {
+        return false;
+    }
+    var value = '';
+    var paramStr = window.location.search ? window.location.search.substr(1) : '';
+    if (paramStr) {
+        paramStr.split('&').forEach(function (param) {
+            var arr = param.split('=');
+            if (arr[0] == key) {
+                value = arr[1];
+            }
+        });
+    }
+    return value;
+ }
+
+
+ if(getQueryParam('val')){
+    //  console.log(getQueryParam('val'));
+     console.log(decodeURI(getQueryParam('val')));
+    $("#keyVal").html(decodeURI(getQueryParam('val')))
+        console.log("获取音乐列表")
+        $.get('./src/data/data.json',function(data){
+            console.log("音乐列表")
+            console.log(data);
+            // 搜索结果匹配
+            let arr = [];
+            data.map((v,i)=>{
+                if(v.name.indexOf(decodeURI(getQueryParam('val')))!=-1){
+                    arr.push(v)
+                }
+            })
+            if(arr.length){
+                console.log("匹配结果")
+                console.log(arr)
+                let html='';
+                arr.map((v,i)=>{
+                    html+=`<a href="./play.html?val=${v.name}">`;
+                    html+=`<li class="list-group-item flex justify-between align-center" >`;
+                    // if(v.name)
+                    html+=`<div>${v.name.substring(0,v.name.length-4)}</div>`;
+                    html+=`<div>播放</div>`;
+                    html+=`</li>`;
+                    html+=`</a>`;
+                })
+                $(".list-group").html(html);
+            }else{
+                // 未匹配到结果
+                $(".noData").css('display','block')
+            }
+            
+        })
+    
+ }
 
 
 </script>
