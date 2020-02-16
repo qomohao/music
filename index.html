@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仿QQ音乐PC</title>
+    <title>仿QQ音乐</title>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./src/common.css">
     <style>
@@ -17,6 +17,10 @@
     top: 0;
     background: #fff;
     z-index: 9;
+    box-shadow: 0 1px 1px 1px #eee;
+}
+.header .app-name{
+    font-size: 20px;
 }
 .header .search{
     width: calc(100% - 100px);
@@ -57,7 +61,7 @@
     <div class="main">
         <!-- 头部信息 -->
         <div class="header flex justify-between align-center">
-            <div>QQ音乐</div>
+            <div class="app-name">QQ音乐</div>
             <div class="search flex align-center justify-end">
                 <input type="text" class="form-control " placeholder="请输入要搜索的内容">
                 <a href="./search.html"><button type="button" class="btn btn-primary btn-sm">搜索</button></a>

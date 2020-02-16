@@ -3,19 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仿QQ音乐PC</title>
+    <title>仿QQ音乐</title>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./src/common.css">
     <style>
         .main{
             height: 100vh;
                 overflow: hidden;
-                color: #666;
+        }
+        .main a{
+            color: #666;
         }
         .header{
             padding: 0 10px;
             height: 8vh;
             font-size: 20px;
+            position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 9;
+    box-shadow: 0 1px 1px 1px #eee;
         }
         .header .back{
             height: 20px;
