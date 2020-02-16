@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仿QQ音乐</title>
+    <title>熊猫音乐</title>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./src/common.css">
     <style>
@@ -69,6 +69,26 @@
         text-overflow:ellipsis;
         white-space: nowrap;
     }
+    .radioStation{
+        padding: 10px 0 0 10px;
+    }
+    .radioStation >div{
+        text-align: center;
+        width: 100px;
+        height: 80px;
+        line-height: 40px;
+    }
+    .radioStation .item{
+        width: 100px;
+        height: 60px;
+        border-radius: 5px;
+        overflow: hidden;
+        border: 1px solid #eee;
+    }
+    .radioStation .item img{
+        width: auto;
+        height: 100%;
+    }
     </style>
 </head>
 <body>
@@ -121,6 +141,15 @@
               <span class="carousel-control-next-icon"></span>
             </a>
           </div>
+          <!-- 音乐电台 -->
+          <div class="radioStation"> 
+              <div>
+                <div class="qwe item" onclick="radioStation()">
+                    <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1075026164,4054460497&fm=26&gp=0.jpg" >
+                </div>
+                 热推FM
+              </div>
+          </div>
           <!-- 歌曲分类 -->
           <!-- <h4>歌曲分类</h4> -->
           <div class="category flex">            
@@ -137,12 +166,15 @@
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
+    // 音乐列表
+    var musicList=[];
     // 获取音乐列表
     function getMusicList(){
         console.log("获取音乐列表")
         $.get('./src/data/data.json',function(data){
             console.log("音乐列表")
             console.log(data);
+            musicList=data;
              // 歌手列表
             let singerList=[];
             let html='';
@@ -178,7 +210,10 @@
     }
 
         getMusicList();
-  
+  // 电台模式
+  function radioStation(){
+      location.href=`./play.html?val=${musicList[Math.floor(Math.random()*musicList.length)].name}`
+  }
 //   去搜索页
 function search(){
     if(!$("#keyVal").val()){

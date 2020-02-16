@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>仿QQ音乐</title>
+    <title>熊猫音乐</title>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./src/common.css">
     <style>
@@ -107,8 +107,8 @@ height: 15vh;
           <div>
             <img src="./src/images/right.png" id="next">
           </div>
-        <audio id="musicPlay"></audio>
        </div>
+       <audio id="musicPlay"></audio>
     </div>
 </body>
 </html>
@@ -116,14 +116,14 @@ height: 15vh;
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
 
-    // 获取音乐实例
+// 获取音乐实例
  var music = document.getElementById("musicPlay");
 //  音乐列表
 var musicList=[];
 // 当前播放的音乐下标
 var nowIndex=0;
     // 获取页面query值 -- val (歌曲名称)
-  function getQueryParam(key) {
+function getQueryParam(key) {
     if (!key) {
         return false;
     }
@@ -146,7 +146,6 @@ function back(){
 }
 //  判断音乐是否加载完毕
 function musicLoad(){
-   //  http://m10.music.126.net/20200216161140/c18d326dfe3d4ceec50a572f28b54b16/ymusic/974f/8268/7abe/8564ba8ba2e9ff9151f9c9266ab0c402.mp3
 //  判断query val 赋值歌曲链接进行播放
  if(getQueryParam('val')){
     //  console.log(getQueryParam('val'));
@@ -158,6 +157,26 @@ function musicLoad(){
         music.play();
         $(".card").addClass('rotate');
     });
+    // 当前音乐播放完毕，自动切下一首
+    music.loop = false;
+    music.addEventListener('ended', function () {
+　　//监听到播放结束后，在此处可调用自己的接口
+
+    $(".play").css('display','block');
+    $(".pause").css('display','none');
+    if(nowIndex<musicList.length-1){
+        nowIndex++;
+    }else{
+        nowIndex=0;
+    }
+    $("#musicPlay").attr('src','./src/music/'+decodeURI(musicList[nowIndex].name));
+        music.addEventListener("canplay", function(){//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
+        console.log('音乐资源加载完成............')
+        getSongInfo(decodeURI(musicList[nowIndex].name));
+        music.play();
+        $(".card").addClass('rotate');
+    });
+　　}, false);
  }
  
 }
@@ -170,10 +189,7 @@ function getSongInfo(name){
             musicList=data;
             console.log("音乐列表")
             console.log(data);
-            let html='';
             data.map((v,i)=>{
-
-
                if(name){
                 if(v.name==name){
                     $(".songName").html(v.name.split('-')[0].substr(0,v.name.length-4));
@@ -188,7 +204,6 @@ function getSongInfo(name){
                }
                }
             })
-            $(".list-group").html(html);
         })
 }
 
@@ -211,8 +226,6 @@ function getSongInfo(name){
         }
     });
 
-
-
 $("#pre").click(function(){
     console.log("上一首");
     $(".play").css('display','block');
@@ -225,15 +238,15 @@ $("#pre").click(function(){
     $("#musicPlay").attr('src','./src/music/'+decodeURI(musicList[nowIndex].name));
         music.addEventListener("canplay", function(){//监听audio是否加载完毕，如果加载完毕，则读取audio播放时间
         console.log('音乐资源加载完成............')
-        getSongInfo(decodeURI(musicList[nowIndex].name));
-        music.play();
-        $(".card").addClass('rotate');
+            getSongInfo(decodeURI(musicList[nowIndex].name));
+            music.play();
+            $(".card").addClass('rotate');
     });
 })
 $("#next").click(function(){
     console.log("下一首")
-       $(".play").css('display','block');
-            $(".pause").css('display','none');
+    $(".play").css('display','block');
+    $(".pause").css('display','none');
     if(nowIndex<musicList.length-1){
         nowIndex++;
     }else{
